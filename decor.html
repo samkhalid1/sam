@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Keyboard Example</title>
+<style>
+  #container {
+    text-align: center;
+    padding-top: 50px;
+  }
+  #inputField {
+    margin-bottom: 10px;
+    padding: 10px;
+    width: 300px;
+    font-family: Arial, sans-serif;
+  }
+  #buttonContainer {
+    display: inline-block;
+  }
+  .button {
+    padding: 5px 10px;
+    margin: 0 5px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  #copyButton {
+    background-color: #6495ED;
+    color: white;
+  }
+  #transformType {
+    background-color: #3CB371;
+    color: white;
+  }
+  #keyboard {
+    margin-bottom: 10px;
+  }
+  .keyboardButton {
+    padding: 5px 10px;
+    margin: 0 5px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+</style>
+</head>
+<body>
+
+<div id="container">
+  <div id="keyboard">
+    <button class="keyboardButton" onclick="insertText('ツ')">ツ</button>
+    <button class="keyboardButton" onclick="insertText('〆')">〆</button>
+    <button class="keyboardButton" onclick="insertText('《')">《</button>
+    <button class="keyboardButton" onclick="insertText('》')">》</button>
+    <button class="keyboardButton" onclick="insertText('๛')">๛</button>
+<button class="keyboardButton" onclick="insertText('彡')">彡</button>
+<button class="keyboardButton" onclick="insertText('・')">・</button>
+  </div>
+  <input type="text" id="inputField">
+  <div id="buttonContainer">
+    <button class="button" id="copyButton">نسخ</button>
+    <select id="transformType" class="button">
+      <option value="fullwidth1">Qatmiz • CM</option>
+      <option value="firstStyle">𝐐𝐚𝐭𝐦𝐢𝐳 • 𝐂𝐌</option>
+      <option value="secondStyle">𝚀𝚊𝚝𝚖𝚒𝚣 • 𝙲𝙼</option>
+      <option value="fullwidth">Ｑａｔｍｉｚ • ＣＭ</option>
+    </select>
+  </div>
+</div>
+
+<script>
+  const inputField = document.getElementById('inputField');
+  const transformType = document.getElementById('transformType');
+  const copyButton = document.getElementById('copyButton');
+  let charTable = {};
+
+  // Function to update the charTable based on the selected transform type
+  function updateCharTable() {
+    if (transformType.value === 'firstStyle') {
+      charTable = {
+        'A': '𝐀', 'B': '𝐁', 'C': '𝐂', 'D': '𝐃', 'E': '𝐄', 'F': '𝐅', 'G': '𝐆', 'H': '𝐇', 'I': '𝐈', 'J': '𝐉',
+        'K': '𝐊', 'L': '𝐋', 'M': '𝐌', 'N': '𝐍', 'O': '𝐎', 'P': '𝐏', 'Q': '𝐐', 'R': '𝐑', 'S': '𝐒', 'T': '𝐓',
+        'U': '𝐔', 'V': '𝐕', 'W': '𝐖', 'X': '𝐗', 'Y': '𝐘', 'Z': '𝐙', 'a': '𝐚', 'b': '𝐛', 'c': '𝐜', 'd': '𝐝',
+        'e': '𝐞', 'f': '𝐟', 'g': '𝐠', 'h': '𝐡', 'i': '𝐢', 'j': '𝐣', 'k': '𝐤', 'l': '𝐥', 'm': '𝐦', 'n': '𝐧',
+        'o': '𝐨', 'p': '𝐩', 'q': '𝐪', 'r': '𝐫', 's': '𝐬', 't': '𝐭', 'u': '𝐮', 'v': '𝐯', 'w': '𝐰', 'x': '𝐱',
+        'y': '𝐲', 'z': '𝐳'
+};
+    } else if (transformType.value === 'secondStyle') {
+      charTable = {
+        'A': '𝙰', 'B': '𝙱', 'C': '𝙲', 'D': '𝙳', 'E': '𝙴', 'F': '𝙵', 'G': '𝙶', 'H': '𝙷', 'I': '𝙸', 'J': '𝙹',
+        'K': '𝙺', 'L': '𝙻', 'M': '𝙼', 'N': '𝙽', 'O': '𝙾', 'P': '𝙿', 'Q': '𝚀', 'R': '𝚁', 'S': '𝚂', 'T': '𝚃',
+        'U': '𝚄', 'V': '𝚅', 'W': '𝚆', 'X': '𝚇', 'Y': '𝚈', 'Z': '𝚉', 'a': '𝚊', 'b': '𝚋', 'c': '𝚌', 'd': '𝚍',
+        'e': '𝚎', 'f': '𝚏', 'g': '𝚐', 'h': '𝚑', 'i': '𝚒', 'j': '𝚓', 'k': '𝚔', 'l': '𝚕', 'm': '𝚖', 'n': '𝚗',
+        'o': '𝚘', 'p': '𝚙', 'q': '𝚚', 'r': '𝚛', 's': '𝚜', 't': '𝚝', 'u': '𝚞', 'v': '𝚟', 'w': '𝚠', 'x': '𝚡',
+        'y': '𝚢', 'z': '𝚣'
+  };
+    } else if (transformType.value === 'fullwidth') {
+      charTable = {
+        'A': 'Ａ', 'B': 'Ｂ', 'C': 'Ｃ', 'D': 'Ｄ', 'E': 'Ｅ', 'F': 'Ｆ', 'G': 'Ｇ', 'H': 'Ｈ', 'I': 'Ｉ', 'J': 'Ｊ',
+        'K': 'Ｋ', 'L': 'Ｌ', 'M': 'Ｍ', 'N': 'Ｎ', 'O': 'Ｏ', 'P': 'Ｐ', 'Q': 'Ｑ', 'R': 'Ｒ', 'S': 'Ｓ', 'T': 'Ｔ',
+        'U': 'Ｕ', 'V': 'Ｖ', 'W': 'Ｗ', 'X': 'Ｘ', 'Y': 'Ｙ', 'Z': 'Ｚ', 'a': 'ａ', 'b': 'ｂ', 'c': 'ｃ', 'd': 'ｄ',
+        'e': 'ｅ', 'f': 'ｆ', 'g': 'ｇ', 'h': 'ｈ', 'i': 'ｉ', 'j': 'ｊ', 'k': 'ｋ', 'l': 'ｌ', 'm': 'ｍ', 'n': 'ｎ',
+        'o': 'ｏ', 'p': 'ｐ', 'q': 'ｑ', 'r': 'ｒ', 's': 'ｓ', 't': 'ｔ', 'u': 'ｕ', 'v': 'ｖ', 'w': 'ｗ', 'x': 'ｘ',
+        'y': 'ｙ', 'z': 'ｚ'
+      };
+    } else if (transformType.value === 'fullwidth1') {
+      charTable = {
+        'A': 'A', 'B': 'B', 'C': 'C', 'D': 'D', 'E': 'E', 'F': 'F', 'G': 'G', 'H': 'H', 'I': 'I', 'J': 'J',
+        'K': 'K', 'L': 'L', 'M': 'M', 'N': 'N', 'O': 'O', 'P': 'P', 'Q': 'Q', 'R': 'R', 'S': 'S', 'T': 'T',
+        'U': 'U', 'V': 'V', 'W': 'W', 'X': 'X', 'Y': 'Y', 'Z': 'Z', 'a': 'a', 'b': 'b', 'c': 'c', 'd': 'd',
+        'e': 'e', 'f': 'f', 'g': 'g', 'h': 'h', 'i': 'i', 'j': 'j', 'k': 'k', 'l': 'l', 'm': 'm', 'n': 'n',
+        'o': 'o', 'p': 'p', 'q': 'q', 'r': 'r', 's': 's', 't': 't', 'u': 'u', 'v': 'v', 'w': 'w', 'x': 'x',
+        'y': 'y', 'z': 'z'
+      };
+    }
+  }
+
+  // Event listener for input field
+  inputField.addEventListener('input', function() {
+    const text = this.value;
+    let transformedText = '';
+
+    for (let i = 0; i < text.length; i++) {
+      const char = text[i];
+      transformedText += charTable[char] || char;
+    }
+
+    this.value = transformedText;
+  });
+
+  // Event listener for select input to update the transform type
+  transformType.addEventListener('change', function() {
+    updateCharTable();
+    // Trigger input event to apply transformation to existing text
+    inputField.dispatchEvent(new Event('input'));
+  });
+
+  // Event listener for copy button
+  copyButton.addEventListener('click', function() {
+    inputField.select();
+    document.execCommand('copy');
+    window.getSelection().removeAllRanges();
+  });
+
+  // Function to insert text into input field
+  function insertText(text) {
+    const cursorPosition = inputField.selectionStart;
+    const textBeforeCursor = inputField.value.substring(0, cursorPosition);
+    const textAfterCursor = inputField.value.substring(cursorPosition, inputField.value.length);
+    inputField.value = textBeforeCursor + text + textAfterCursor;
+    inputField.focus();
+    inputField.setSelectionRange(cursorPosition + text.length, cursorPosition + text.length);
+  }
+
+  // Initialize charTable based on the initial transform type
+  updateCharTable();
+</script>
+
+</body>
+</html>
