@@ -1,0 +1,132 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>موقع قطميز لعمل شارة الكلان </title>
+<style>
+  
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background-image: url("https://i.ibb.co/87pLKWx/IMG-20240511-082239-679.jpg");
+        background-size: cover; /* تغطية الشاشة بالصورة */
+        background-position: center; /* توسيط الصورة */
+    }
+
+    .container {
+        text-align: center;
+        background-color: rgba(255, 255, 255, 0.7); /* خلفية شفافة للعناصر */
+        border-radius: 15px;
+        padding: 20px;
+        box-shadow: 0px 0px 20px 0px rgba(0,0,0,0.1);
+        max-width: 90%;
+        display: flex;
+        flex-direction: column; /* ترتيب العناصر عموديًا */
+        align-items: center;
+    }
+
+    input[type="text"] {
+        padding: 8px;
+        margin: 10px;
+        width: 150px; /* حجم ثابت لحقل الإدخال */
+        border-radius: 5px;
+        border: 1px solid #ccc;
+    }
+
+    .action-buttons {
+        display: flex;
+        justify-content: center;
+        margin-top: 20px;
+    }
+
+    .action-buttons button {
+        padding: 10px 20px;
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        cursor: pointer;
+        border-radius: 5px;
+        transition: background-color 0.3s ease;
+        margin: 0 10px; /* تحديد هامش بين الأزرار */
+    }
+
+    .action-buttons button:hover {
+        background-color: #45a049;
+    }
+
+    #modifiedName {
+        margin-top: 20px;
+        margin-bottom: 20px;
+        width: 150px; /* حجم ثابت لحقل الإدخال المعدل */
+    }
+
+    h1 {
+        margin: 20px 0; /* تحديد هامش يمين ويسار للعنوان */
+        background-image: linear-gradient(to right, violet, indigo, blue, green, yellow, orange, red);
+        background-size: 400%;
+        color: transparent;
+        -webkit-background-clip: text;
+        background-clip: text;
+        animation: rainbowText 10s linear infinite;
+    }
+
+    @keyframes rainbowText {
+        0% {
+            background-position: 0%;
+        }
+        100% {
+            background-position: 400%;
+        }
+    }
+</style>
+</head>
+
+<body>
+
+<div class="container">
+    <h1>موقع قطميز لعمل شارة الكلان </h1>
+    <input type="text" id="nameInput" placeholder="أدخل الإسم">
+    <input type="text" id="modifiedName" placeholder="الإسم المعدل" readonly>
+    <div class="action-buttons">
+        <button id="decorButton" onclick="redirectToSecondPage()">الزخرفة</button>
+        <button id="addButton" onclick="addCM()">تعديل</button>
+        <button id="copyButton" onclick="copyName()" style="display: none;">نسخ</button>
+    </div>
+</div>
+
+<script>
+function redirectToSecondPage() {
+    window.location.href = "decor.html";
+}
+
+function addCM() {
+    var nameInput = document.getElementById("nameInput").value;
+    var modifiedName = "CM・" + nameInput;
+    document.getElementById("modifiedName").value = modifiedName;
+    document.getElementById("addButton").style.display = "none";
+    document.getElementById("copyButton").style.display = "inline-block";
+}
+
+function copyName() {
+    var copyText = document.getElementById("modifiedName");
+    copyText.select();
+    copyText.setSelectionRange(0, 99999); 
+    document.execCommand("copy");
+    document.getElementById("copyButton").innerHTML = "تم النسخ!";
+    setTimeout(function(){
+        document.getElementById("copyButton").innerHTML = "نسخ الإسم المعدل";
+    }, 2000);
+    document.getElementById("addButton").style.display = "inline-block";
+    document.getElementById("copyButton").style.display = "none";
+}
+</script>
+
+</body>
+</html>
