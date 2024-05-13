@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,7 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>موقع قطميز لعمل شارة الكلان </title>
 <style>
-  
     body {
         font-family: Arial, sans-serif;
         margin: 0;
@@ -85,9 +83,73 @@
             background-position: 400%;
         }
     }
+
+    .popup {
+        position: fixed;
+        top: 50%; left: 50%;
+        transform: translate(-50%, -50%);
+        background: #fff; padding: 10px;
+        border: 1px solid #ccc; border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        display: none; z-index: 9999;
+        text-align: right; max-width: 300px;
+    }
+
+    .overlay {
+        position: fixed;
+        top: 0; left: 0;
+        width: 100%; height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        display: none; z-index: 999;
+    }
+
+    .popup ul { list-style: none; }
+
+    #togglePopup {
+        background-color: green;
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+  #instructionsButton {
+    display: block; /* جعل الزر يظهر في سطر مستقل */
+    background-color: #45a049; /* اللون الأخضر */
+    color: #fff; /* لون النص */
+    border: none; /* إزالة الحدود */
+    padding: 10px 20px; /* تعيين التباعد الداخلي */
+    border-radius: 5px; /* جعل الزاويا مستديرة */
+    margin-top: 20px; /* زيادة المسافة بين الزر والعنصر السابق */
+    /* يمكنك تغيير خصائص أخرى حسب الحاجة */
+}
+  #closePopup {
+    background-color: #45a049;
+    color: #fff; /* يمكنك تغيير لون النص حسب الحاجة */
+    /* يمكنك أيضًا تغيير أي خصائص أخرى ترغب في تعديلها */
+    border: none; /* إزالة الحدود */
+    padding: 10px 20px; /* تعيين التباعد الداخلي */
+    border-radius: 5px; /* جعل الزاويا مستديرة */
+}
+  .popup {
+    /* الخصائص الأخرى للـ .popup هنا */
+    text-align: center; /* لجعل النص في وسط المربع */
+}
+
+#closePopup {
+    /* الخصائص الأخرى للزر هنا */
+    display: inline-block; /* لجعل الزر يظهر بشكل مربع */
+    /* يمكنك أيضًا تغيير أي خصائص أخرى ترغب في تعديلها */
+}
+#instructionPopup {
+      width: 300px;
+      max-height: 600px;
+      overflow-y: auto;
+      border: 1px solid #ccc;
+      padding: 10px;
+    }
 </style>
 </head>
-
 <body>
 
 <div class="container">
@@ -95,11 +157,34 @@
     <input type="text" id="nameInput" placeholder="أدخل الإسم">
     <input type="text" id="modifiedName" placeholder="الإسم المعدل" readonly>
     <div class="action-buttons">
-        <button id="decorButton" onclick="redirectToSecondPage()">الزخرفة</button>
+        
+      
+      <button id="decorButton" onclick="redirectToSecondPage()">الزخرفة</button>
         <button id="addButton" onclick="addCM()">تعديل</button>
         <button id="copyButton" onclick="copyName()" style="display: none;">نسخ</button>
+      </div>
+      <button id="instructionsButton">إظهار التعليمات</button>
     </div>
 </div>
+
+<div id="instructionPopup" class="popup">
+    <h3>حول الموقع</h3>
+    <ul>
+        <li>الموقع خاص بالأخ قطميز</li>
+         <h3>طريقة الاستخدام </h3>
+        <li>حط اسمك بالعربي او بالانجليزي على اول خانة ويتم تلقائياً التعديل عليه وعمل شارة كلان قطميز على اسمك</li>
+        <li>𝐂𝐌・</li>
+        <h3>والخطوة الثانية </h3>
+        <li>ادخل لعبة ببجي وقم بتغيير اسمك الجديد عبر بطاقة تغيير الاسم اسمك الذي يحتوي على شارة كلان قطميز وثم اعمل طلب على هذا الايدي بعد تغيير اسمك ويتم قبولك في الكلان باسرع وقت 
+الايدي 👇</li>
+        <h3>5556875</h4>
+        <li>ويوجد زر كمان في صفحة موقع قطميز تستطيع من خلاله زخرفة اسمك وتغيير اسمك بالحروف الكبيره او الصغيره </li>
+        <li>وتحياتي للجميع منورين الموقع ومنورين الكلان حبايب قلبي ربي يسعدكم</li>
+        <h4><a href="https://t.me/Qatmiz_CM" id="linkButton" target="_blank">للاشتراك في قناتنا على التليجرام اضغط هنا.</a></h4>
+    </ul>
+    <button id="closePopup">إغلاق</button>
+</div>
+<div class="overlay"></div>
 
 <script>
 function redirectToSecondPage() {
@@ -119,13 +204,26 @@ function copyName() {
     copyText.select();
     copyText.setSelectionRange(0, 99999); 
     document.execCommand("copy");
-    document.getElementById("copyButton").innerHTML = "تم النسخ!";
+    var copyButton = document.getElementById("copyButton");
+    copyButton.innerHTML = "تم النسخ!";
     setTimeout(function(){
-        document.getElementById("copyButton").innerHTML = "نسخ الإسم المعدل";
+        copyButton.innerHTML = "نسخ الإسم المعدل";
     }, 2000);
     document.getElementById("addButton").style.display = "inline-block";
     document.getElementById("copyButton").style.display = "none";
 }
+
+document.getElementById("instructionsButton").addEventListener("click", function(){
+    let popup = document.querySelector(".popup");
+    let overlay = document.querySelector(".overlay");
+    popup.style.display = (popup.style.display === "block") ? "none" : "block";
+    overlay.style.display = (overlay.style.display === "block") ? "none" : "block";
+});
+
+document.getElementById("closePopup").addEventListener("click", function(){
+    document.querySelector(".popup").style.display = "none";
+    document.querySelector(".overlay").style.display = "none";
+});
 </script>
 
 </body>
